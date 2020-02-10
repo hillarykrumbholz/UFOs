@@ -23,23 +23,42 @@ function buildTable(data) {
     });
 }
 
-// Set up handleClick
-function handleClick(){
-    // Grab the datetime vaue from the filter
-    let date = d3.select("#datetime").property("value");
-    let filteredData = tableData;
-    // Check to see if a date was entered and filter the
-    // data using the date.
-    if (date) {
-        // Apply 'filter' to the table data to only keep the
-        // rows where the 'datetime' value matches the filter value
-        filteredData = filteredData.filter(row => row.datetime == date);
+// CHALLENGE
+
+// Keep track of all filters
+var filters = {};
+
+// This function will replace the handleClick function
+function updateFilters() {
+    // Save the element, value, and id of the filter that was changed
+    let changedElement = d3.select(this);
+    let changedValue = changedElement.property("value");
+    let changedId = changedElement.attr("id");
+    // If filter value was entered then add that filteredId and value
+    // to the filters list. Otherwise, clear that filter from the filters object
+    if (changedValue) {
+        filters[changedId] = changedValue;
+    }
+    else{
+        delete filters[changedId];
     };
-    // Rebuid the table using the filtered data
-    // @NOTE: If no date was entered, then filteredData will
-    // just be the original tableData.
-};
+    // Call the function to apply all filters and rebuild the table 
+    filterTable();
+}
+
+function filterTable() {
+    // Set the filteredData to the tableData
+    let filteredData = tableData;
+    // Loop through all of the filters and keep any data that
+    // matches the filter values
+    Object.entries(filters).forEach(([key,value])=>{
+        filteredData = filteredData.filter(row => row[key] === value);
+    });
+    // Finally rebuild the table using the filtered Data
+    buildTable(filteredData);
+}
+
 // Attach an event to listen for the form button
-d3.selectAll("#filter-btn").on("click", handleClick);
+d3.selectAll("input").on("change", updateFilters);
 // Build the table when the page loads
 buildTable(tableData);
