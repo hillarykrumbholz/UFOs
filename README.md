@@ -14,5 +14,5 @@ JavaScript is a well-established coding language that was designed to enhance HT
 ### Project Summary
 A webpage was created that allows readers the ability to filter UFO data by different factors. The ability to pinpoint a search by applying multiple factors at once such as date, city, and shape of the UFO provides a more in-depth analysis of observations.
 
-### An image of the webpage with multiple filters applied:
+An image of the webpage with multiple filters applied:
 ![Webpage](https://github.com/hillarykrumbholz/UFOs/blob/master/Static/images/UFO_webpage_screenshot.png)
